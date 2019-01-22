@@ -1,0 +1,20 @@
+# Set default behavior to automatically normalize line endings.
+* text=auto
+
+*.cs        diff=csharp
+*.sql       diff=astextplain
+*.sln       merge=union eol=crlf
+*.csproj    merge=union
+*.vbproj    merge=union
+*.vcxproj   merge=union
+*.vcproj    merge=union
+*.dbproj    merge=union
+*.fsproj    merge=union
+*.lsproj    merge=union
+*.wixproj   merge=union
+*.modelproj merge=union
+*.sqlproj   merge=union
+*.wwaproj   merge=union
+
+*.docx  diff=astextplain
+*.DOCX  diff=astextplain
