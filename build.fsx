@@ -43,7 +43,7 @@ Options:
   -h --help              Show this screen.
   --package=<package>    Name of the package to build
   --configuration=<cfg>  Build configuration [default: debug]
-  --tag:                 in Release configuration       : defaults to branchname if not master
+  --tag=<tag>            in Release configuration       : defaults to branchname if not master
                          in other (Debug) configuration : defaults no official
  """
 
@@ -80,7 +80,6 @@ Target.create "Pack" (fun _ ->
         let getTagFromBranch  () =
             Environment.environVarOrNone "BUILD_BRANCH"
             |? (Git.Information.getBranchName rootDir |> Some)
-            |> Option.filter (fun s -> s.TrimEnd().EndsWith("master") |> not)
             |> Option.filter(fun _ -> configuration = "Release")
 
         let sanitizeAsNuGetLabel (s:string) =
@@ -103,6 +102,7 @@ Target.create "Pack" (fun _ ->
         getBuildParamOrNone "--tag"
         |? getTagFromBranch ()
         |> Option.map sanitizeAsNuGetLabel
+        |> Option.filter (fun s -> s <> "master" && s <> "nobranch")
         |> Option.filter(fun s -> s <> "")
 
     Trace.tracefn "Tag: '%s'" (tag |! "(none)")
