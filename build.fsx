@@ -5,7 +5,6 @@ nuget Fake.IO.FileSystem
 nuget Fake.DotNet.Cli
 nuget Fake.Tools.Git
 nuget Fake.DotNet.Paket
-nuget Fake.DotNet.Testing.NUnit
 nuget Fake.BuildServer.TeamCity
 nuget Fake.Core.CommandLineParsing
 "
@@ -65,7 +64,7 @@ let getBuildParamOrNone name =
 let rootDir = __SOURCE_DIRECTORY__
 let configuration = getBuildParamOrNone "--configuration" |! "Debug"
 
-let srcDir = rootDir 
+let srcDir = rootDir @@ "src"
 let slnFile = rootDir |> Directory.findFirstMatchingFile "*.sln"
 Trace.tracefn "Configuration: '%s'" configuration
 
@@ -140,7 +139,10 @@ Target.create "Pack" (fun _ ->
 )
 
 Target.create "Test" <| fun _ ->
-    DotNet.test (fun p -> { p with Configuration = DotNet.BuildConfiguration.fromString configuration }) slnFile
+    DotNet.test (fun p -> { p with 
+                                Configuration = DotNet.BuildConfiguration.fromString configuration 
+                                NoBuild = true
+                                NoRestore = true }) slnFile
 
 // Dependencies
 "Build"
