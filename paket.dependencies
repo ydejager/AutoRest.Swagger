@@ -7,7 +7,6 @@ source https://www.nuget.org/api/v2
 nuget Newtonsoft.Json ~> 9.0.1
 nuget System.Net.Http ~> 4.3.0
 nuget System.Reflection.TypeExtensions ~> 4.3.0
-nuget YamlDotNet.Signed ~> 5.0.0
 nuget Microsoft.NET.Test.Sdk ~> 15.9.0
 nuget xunit.runner.visualstudio ~> 2.3.0
 nuget xunit ~> 2.3.0

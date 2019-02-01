@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using YamlDotNet.RepresentationModel;
 
 namespace AutoRest.Swagger.Logging
 {
@@ -31,13 +30,5 @@ namespace AutoRest.Swagger.Logging
         public override string ReadablePath => Property.StartsWith("/") ? Property : $"/{Property}";
 
         public override object RawPath => Property;
-
-        public override YamlNode SelectNode(ref YamlNode node)
-        {
-            var child = (node as YamlMappingNode)?.Children?.FirstOrDefault(pair =>
-                pair.Key.ToString().Equals(Property, StringComparison.OrdinalIgnoreCase));
-            node = child?.Value;
-            return child?.Key;
-        }
     }
 }

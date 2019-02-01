@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using YamlDotNet.RepresentationModel;
 
 namespace AutoRest.Swagger.Logging
 {
@@ -42,13 +41,6 @@ namespace AutoRest.Swagger.Logging
         public ObjectPath AppendProperty(string property)
         {
             return Append(new ObjectPathPartProperty(property));
-        }
-
-        public YamlNode SelectNode(YamlNode node)
-        {
-            var result = node;
-            foreach (var part in Path) result = part.SelectNode(ref node) ?? result;
-            return result;
         }
     }
 }
