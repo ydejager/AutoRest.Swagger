@@ -134,6 +134,13 @@ Target.create "Pack" (fun _ ->
     packages 
     |> Seq.iter (fun package -> 
         Trace.tracefn "Package: '%s'" package
+        let objDir = srcDir @@ package @@ "obj" @@ configuration |> DirectoryInfo.ofPath
+        if DirectoryInfo.exists objDir then            
+            DirectoryInfo.getMatchingFiles (package + ".*.nuspec") objDir
+            |> Seq.iter (fun f -> 
+                Trace.tracefn "Cleaning previous nuspec: '%s'" f.FullName
+                f.Delete())
+
         DotNet.pack createPackOptions (srcDir @@ package @@ (package + ".csproj"))
         )
 )
